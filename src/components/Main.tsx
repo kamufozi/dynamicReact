@@ -25,7 +25,7 @@ export default function Main(){
                  aria-label="Add ingredient" />
                  <button className="border-[1px] bg-[#141413] text-white px-5 py-2 rounded-sm ">+ Add ingredient</button>
             </form>
-            <ul className="list-disc pl-5">
+            <ul className="list-disc pl-5 mt-2.5">
                 {ingredientListItems}
             </ul>
         </main>
