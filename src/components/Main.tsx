@@ -1,7 +1,8 @@
 import type React from "react";
+import { useState } from "react";
 
 export default function Main(){
-    const ingredients = ['amata','creme vanille','igikakarubamba']
+    const [ingredients,setIngredients] = useState<string[]>(['amata','umushyushyo'])
     const ingredientListItems = ingredients.map(i=>(
         <li key={i}>{i}</li>
     ))
@@ -10,17 +11,15 @@ export default function Main(){
         const formData = new FormData(event.currentTarget)
         const inputx  = formData.get("ingredient")
         if (typeof(inputx)==="string"){
-        ingredients.push(inputx);}
-        console.log(ingredients)
+        setIngredients(prevIngredient=>[...prevIngredient,inputx])
 
-    }
+    }}
     return (
         <main className="px-[30px] py-[10px] mt-4">
             <form className="flex justify-center gap-[12px]" onSubmit={handleSubmit}>
                 <input
                  className="border-[1px] shadow-md grow-1 min-w-[150px]  max-w-[450px] px-5"
                  type="text"
-                 placeholder="umushyushyo"
                  name="ingredient"
                  aria-label="Add ingredient" />
                  <button className="border-[1px] bg-[#141413] text-white px-5 py-2 rounded-sm ">+ Add ingredient</button>
