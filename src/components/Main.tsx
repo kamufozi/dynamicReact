@@ -32,7 +32,11 @@ export default function Main(){
                 setRecipeShown={setRecipeShown}
             />
                 {
-                  recipeShown && <Recipe />
+                  recipeShown && 
+                  <Recipe 
+                    ingredients={ingredients}
+                    recipeShown = {recipeShown}
+                    />
                 }
 
         </main>
