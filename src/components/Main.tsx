@@ -1,33 +1,44 @@
-import type React from "react";
-
+import { useState } from "react";
+import Claude from "./ClaudeIngredients"
+import Recipe from "./Recipe";
 export default function Main(){
-    const ingredients = ['amata','creme vanille','igikakarubamba']
+    const [ingredients,setIngredients] = useState<string[]>([])
     const ingredientListItems = ingredients.map(i=>(
         <li key={i}>{i}</li>
     ))
-    const handleSubmit = function (event: React.FormEvent<HTMLFormElement>){
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget)
-        const inputx  = formData.get("ingredient")
+    const [recipeShown,setRecipeShown]= useState(false);
+    const handleSubmit = function (FormData:FormData){
+        const inputx  = FormData.get("ingredient")
         if (typeof(inputx)==="string"){
-        ingredients.push(inputx);}
-        console.log(ingredients)
+        setIngredients(prevIngredient=>[...prevIngredient,inputx])
 
-    }
+    }}
+
     return (
         <main className="px-[30px] py-[10px] mt-4">
-            <form className="flex justify-center gap-[12px]" onSubmit={handleSubmit}>
+            <form className="flex justify-center gap-[12px]" action={handleSubmit}>
                 <input
                  className="border-[1px] shadow-md grow-1 min-w-[150px]  max-w-[450px] px-5"
                  type="text"
-                 placeholder="umushyushyo"
                  name="ingredient"
+                 placeholder="eg : Oregano"
                  aria-label="Add ingredient" />
                  <button className="border-[1px] bg-[#141413] text-white px-5 py-2 rounded-sm ">+ Add ingredient</button>
             </form>
-            <ul className="list-disc pl-5">
-                {ingredientListItems}
-            </ul>
+            <Claude 
+                ingredients={ingredients}
+                ingredientListItems={ingredientListItems}
+                recipeShown={recipeShown}
+                setRecipeShown={setRecipeShown}
+            />
+                {
+                  recipeShown && 
+                  <Recipe 
+                    ingredients={ingredients}
+                    recipeShown = {recipeShown}
+                    />
+                }
+
         </main>
     )
 }
